@@ -1,0 +1,64 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}Dashboard — Dual Investment Simulation{% endblock %}
+{% block meta %}
+<meta name="description" content="Dashboard showing top performing dual investment simulations with balance history charts." />
+{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <h1 class="page-title"><i class="ph ph-house-simple" style="color:var(--accent-gold)"></i> Dashboard</h1>
+  <p class="page-subtitle">Top 10 performing simulations — monitored in real-time</p>
+</div>
+
+<!-- ─── Stats Row ──────────────────────────────────────────────────────────── -->
+<div class="stats-grid" id="stats-row">
+  <div class="stat-card">
+    <span class="stat-label"><i class="ph ph-flask"></i> Total Simulations</span>
+    <span class="stat-value gold" id="stat-total-sims">—</span>
+  </div>
+  <div class="stat-card">
+    <span class="stat-label"><i class="ph ph-currency-dollar"></i> Best USDC Balance</span>
+    <span class="stat-value green" id="stat-best-usdc">—</span>
+  </div>
+  <div class="stat-card">
+    <span class="stat-label"><i class="ph ph-coin"></i> Best BTC Balance</span>
+    <span class="stat-value gold" id="stat-best-btc">—</span>
+  </div>
+</div>
+
+<!-- ─── Overlay Chart ─────────────────────────────────────────────────────── -->
+<div class="card" id="overlay-chart-card" style="margin-bottom:2rem;">
+  <div class="card-header">
+    <h2 class="section-title"><i class="ph ph-chart-line icon"></i> Top Simulations — Balance History</h2>
+    <div class="chart-controls">
+      <button class="btn btn-ghost btn-sm active" id="chart-toggle-usdc" onclick="switchOverlayMode('usdc')">
+        <i class="ph ph-currency-dollar"></i> USDC
+      </button>
+      <button class="btn btn-ghost btn-sm" id="chart-toggle-btc" onclick="switchOverlayMode('btc')">
+        <i class="ph ph-coin"></i> BTC
+      </button>
+    </div>
+  </div>
+  <div class="chart-container" style="height:320px;">
+    <canvas id="overlay-chart"></canvas>
+  </div>
+</div>
+
+<!-- ─── Individual Simulation Cards ──────────────────────────────────────── -->
+<div class="section-header">
+  <h2 class="section-title"><i class="ph ph-star icon"></i> Top Simulations</h2>
+</div>
+
+<div id="top-sims-loading" class="loading-state">
+  <div class="spinner"></div>
+  <span>Loading top simulations…</span>
+</div>
+
+<div class="sim-grid" id="top-sims-grid" style="display:none;"></div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'core/js/dashboard.js' %}"></script>
+{% endblock %}

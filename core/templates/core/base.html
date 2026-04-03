@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0B0E11" />
+  {% block meta %}
+  <meta name="description" content="Dual Investment Simulation — Automated Binance dual investment strategy backtesting." />
+  {% endblock %}
+  <title>{% block title %}Dual Investment Simulation{% endblock %}</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Icons (Phosphor) -->
+  <script src="https://unpkg.com/@phosphor-icons/web@2.1.1/src/index.js" defer></script>
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+
+  <!-- Styles -->
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'core/css/styles.css' %}" />
+  {% block extra_css %}{% endblock %}
+</head>
+<body>
+
+  {% if user.is_authenticated %}
+  <nav class="navbar" role="navigation" aria-label="Main navigation">
+    <a href="{% url 'dashboard' %}" class="navbar-brand" id="nav-brand">
+      <div class="brand-icon"><i class="ph ph-chart-line"></i></div>
+      <span>Dual <em>Invest</em></span>
+    </a>
+
+    <ul class="navbar-nav">
+      <li>
+        <a href="{% url 'dashboard' %}"
+           class="nav-link {% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}"
+           id="nav-dashboard">
+          <i class="ph ph-house-simple"></i> Dashboard
+        </a>
+      </li>
+      <li>
+        <a href="{% url 'simulations' %}"
+           class="nav-link {% if request.resolver_match.url_name == 'simulations' %}active{% endif %}"
+           id="nav-simulations">
+          <i class="ph ph-flask"></i> Simulations
+        </a>
+      </li>
+      <li>
+        <a href="{% url 'logout' %}" class="btn btn-secondary btn-sm" id="nav-logout">
+          <i class="ph ph-sign-out"></i> Logout
+        </a>
+      </li>
+    </ul>
+  </nav>
+  {% endif %}
+
+  <main class="main-content" role="main">
+    {% if messages %}
+      {% for message in messages %}
+        <div class="alert {% if message.tags == 'error' %}alert-error{% else %}alert-success{% endif %}">
+          {{ message }}
+        </div>
+      {% endfor %}
+    {% endif %}
+
+    {% block content %}{% endblock %}
+  </main>
+
+  {% block extra_js %}{% endblock %}
+</body>
+</html>
