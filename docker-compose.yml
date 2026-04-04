@@ -4,6 +4,8 @@ services:
     ports:
       - "6379:6379"
     restart: unless-stopped
+    networks:
+      - docker_shared_network
 
   website:
     build: .
@@ -14,6 +16,8 @@ services:
     depends_on:
       - redis
     restart: unless-stopped
+    networks:
+      - docker_shared_network
 
   celery:
     build: .
@@ -23,6 +27,8 @@ services:
       - redis
       - website
     restart: unless-stopped
+    networks:
+      - docker_shared_network
 
   celery-beat:
     build: .
@@ -32,3 +38,10 @@ services:
       - redis
       - website
     restart: unless-stopped
+    networks:
+      - docker_shared_network
+
+networks:
+  docker_shared_network:
+    external: true
+
