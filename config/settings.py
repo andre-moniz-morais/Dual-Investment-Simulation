@@ -1,5 +1,7 @@
+import os
 import environ
 from pathlib import Path
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -10,8 +12,8 @@ env = environ.Env(
     ALLOWED_HOSTS=(list, ['localhost', '127.0.0.1']),
 )
 
-# Read .env file
-environ.Env.read_env(BASE_DIR / '.env')
+# Read .env file using python-dotenv
+load_dotenv(BASE_DIR / '.env')
 
 # Core settings
 SECRET_KEY = env('SECRET_KEY', default='django-insecure-change-me-in-production')
